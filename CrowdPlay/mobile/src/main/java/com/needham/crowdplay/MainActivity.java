@@ -18,8 +18,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        System.out.println("in the onCreate");
 
         TumblrPostTask t = new TumblrPostTask();
+        t.execute("");
     }
 
     @Override
@@ -50,20 +52,24 @@ public class MainActivity extends AppCompatActivity {
 
         protected Boolean doInBackground(final String... args)
         {
-            user = client.user();
-
+            //user = client.user();
+            System.out.println("makig the post now");
             TextPost post;
             try {
-                post = client.newPost(client.user().getName(), TextPost.class);
+                post = client.newPost("therealcrowdplay.tumblr.com", TextPost.class);
                 post.setTitle("sample-title");
                 post.setBody("sample-body");
                 post.save();
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
-                System.out.println("illegal access");
+                System.out.println("crowdplay:: illegal access");
             } catch (InstantiationException e) {
                 e.printStackTrace();
-                System.out.println("instantiation exception");
+                System.out.println("crowdplay:: instantiation exception");
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.out.println("crowdplay:: generic error");
+                System.out.println("crowdplay:: generic error");
             }
 
             return true;
