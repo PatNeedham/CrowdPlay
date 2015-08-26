@@ -1,16 +1,19 @@
 package com.needham.crowdplay;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.tumblr.jumblr.JumblrClient;
-import com.tumblr.jumblr.types.TextPost;
 import com.tumblr.jumblr.types.User;
+
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -20,8 +23,17 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         System.out.println("in the onCreate");
 
-        TumblrPostTask t = new TumblrPostTask();
-        t.execute("");
+
+    }
+
+    public void openStudentView(View v) {
+        Intent myIntent = new Intent(MainActivity.this, StudentActivity.class);
+        MainActivity.this.startActivity(myIntent);
+    }
+
+    public void openTeacherView(View v) {
+        Intent myIntent = new Intent(MainActivity.this, TeacherActivity.class);
+        MainActivity.this.startActivity(myIntent);
     }
 
     @Override
@@ -31,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    public class TumblrPostTask extends AsyncTask<String, Void, Boolean>
+    public class TumblrPostTask extends AsyncTask<Map<String, String>, Void, Boolean>
     {
         private final ProgressDialog dialog = new ProgressDialog(MainActivity.this);
         User user;
@@ -50,27 +62,36 @@ public class MainActivity extends AppCompatActivity {
                     "NVvgi0qGu0InHPve6JM155FwzTUHsFlD4vu6tNKd8bEmJtKlnD");
         }
 
-        protected Boolean doInBackground(final String... args)
+        protected Boolean doInBackground(Map<String, String>... args)
         {
             //user = client.user();
-            System.out.println("makig the post now");
-            TextPost post;
-            try {
-                post = client.newPost("therealcrowdplay.tumblr.com", TextPost.class);
-                post.setTitle("sample-title");
-                post.setBody("sample-body");
-                post.save();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-                System.out.println("crowdplay:: illegal access");
-            } catch (InstantiationException e) {
-                e.printStackTrace();
-                System.out.println("crowdplay:: instantiation exception");
-            } catch (Exception e) {
-                e.printStackTrace();
-                System.out.println("crowdplay:: generic error");
-                System.out.println("crowdplay:: generic error");
-            }
+//            System.out.println("makig the post now");
+//            TextPost post;
+//            try {
+//                post = client.newPost("therealcrowdplay.tumblr.com", TextPost.class);
+//                HashSet<String>
+//                Set<String> keySet = args.keySet();
+//                Iterator iter = keySet.iterator();
+//                String first = (String) iter.next();
+//                post.setTitle(first);
+//                post.setBody(" ");
+//
+//                List<String> tags = new ArrayList<String>();
+//                tags.add("interesting");
+//
+//                post.setTags(null);
+//                post.save();
+//            } catch (IllegalAccessException e) {
+//                e.printStackTrace();
+//                System.out.println("crowdplay:: illegal access");
+//            } catch (InstantiationException e) {
+//                e.printStackTrace();
+//                System.out.println("crowdplay:: instantiation exception");
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//                System.out.println("crowdplay:: generic error");
+//                System.out.println("crowdplay:: generic error");
+//            }
 
             return true;
         }
